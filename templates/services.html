@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Services | Afritensor Consult{% endblock %}
+{% block content %}
+<section class="page-head"><div class="wrap"><h1>Services</h1>
+<p class="lead">Five areas of practice, delivered by one coordinated team.</p></div></section>
+<section class="section"><div class="wrap">
+{% for s in services %}
+<article class="svc-detail" id="{{ s.slug }}">
+  <h2>{{ s.title }}</h2>
+  <div><p>{{ s.summary }} {{ s.detail }}</p>
+  <ul class="checks">{% for i in s.scope %}<li>{{ i }}</li>{% endfor %}</ul>
+  <p><a href="{{ url_for('contact') }}">Enquire about {{ s.title }}</a></p></div>
+</article>{% endfor %}
+</div></section>
+{% endblock %}

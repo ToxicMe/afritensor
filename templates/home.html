@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Afritensor Consult | Professional Expertise for Better Business Decisions{% endblock %}
+{% block content %}
+<section class="hero"><div class="wrap hero-grid">
+  <div>
+    <p class="hero-name">Afritensor Consult</p>
+    <h1>Professional Expertise for Better Business Decisions</h1>
+    <p class="lead">We bring together financial expertise, technology, data, taxation, debt management, payroll consultancy and corporate training to give organisations practical, dependable solutions.</p>
+    <p class="actions"><a class="btn" href="{{ url_for('services_page') }}">Explore Our Services</a>
+    <a class="btn btn-ghost" href="{{ url_for('contact') }}">Contact Afritensor Consult</a></p>
+  </div>
+  <aside class="ledger" aria-label="Areas of practice">
+    <p class="ledger-title">Areas of practice</p>
+    <ul>{% for s in services %}<li><a href="{{ url_for('services_page') }}#{{ s.slug }}">{{ s.title }}</a></li>{% endfor %}</ul>
+  </aside>
+</div></section>
+
+<section class="section"><div class="wrap">
+  <h2>Our services</h2>
+  <p class="intro">Five disciplines, one firm. Each area works with the others, so clients deal with a single team that understands the whole picture.</p>
+  <div class="svc-list">{% for s in services %}
+    <article class="svc"><h3>{{ s.title }}</h3><p>{{ s.summary }}</p>
+    <a href="{{ url_for('services_page') }}#{{ s.slug }}">View service details</a></article>{% endfor %}
+  </div>
+</div></section>
+
+<section class="section tint"><div class="wrap split">
+  <h2>A practical, informed partner</h2>
+  <div><p>Afritensor Consult combines complementary professional disciplines to give organisations informed and tailored solutions. We work with businesses, institutions and organisations that need dependable expertise.</p>
+  <p><a href="{{ url_for('about') }}">About Afritensor Consult</a></p></div>
+</div></section>
+
+<section class="cta-band"><div class="wrap">
+  <h2>Discuss your requirements</h2>
+  <p>Tell us what you need and the right division will respond.</p>
+  <a class="btn btn-light" href="{{ url_for('contact') }}">Send an enquiry</a>
+</div></section>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}About | Afritensor Consult{% endblock %}
+{% block content %}
+<section class="page-head"><div class="wrap"><h1>About Afritensor Consult</h1>
+<p class="lead">Complementary professional disciplines, working as one firm to give organisations practical, informed and tailored solutions.</p></div></section>
+
+<section class="section"><div class="wrap split">
+  <h2>Who we are</h2>
+  <div><p>Afritensor Consult is a professional services and technology consultancy. Our work spans finance and audit, software development and data analysis, debt management and collection, taxation and payroll, and corporate training.</p>
+  <p>Because these disciplines sit within one firm, clients benefit from advice that connects accounting, compliance, systems and people.</p></div>
+</div></section>
+
+<section class="section tint"><div class="wrap split">
+  <h2>Our approach</h2>
+  <div><p>We start by understanding the organisation, its obligations and its constraints. We then recommend solutions that are proportionate, clearly explained and ready to implement.</p>
+  <p>Where a matter crosses disciplines, the relevant specialists work together under one engagement.</p></div>
+</div></section>
+
+<section class="section"><div class="wrap">
+  <h2>Our values</h2>
+  <dl class="values">{% for t, d in values %}<div><dt>{{ t }}</dt><dd>{{ d }}</dd></div>{% endfor %}</dl>
+</div></section>
+
+<section class="section tint" id="directors"><div class="wrap">
+  <h2>Our directors</h2>
+  <div class="directors">{% for d in directors %}
+    <article class="director">
+      <div class="photo">{% if d.photo %}<img src="{{ url_for('static', filename='img/directors/' ~ d.photo) }}" alt="{{ d.name }}">{% else %}<span>Photograph</span>{% endif %}</div>
+      <div><h3>{{ d.name }}</h3><p class="role">{{ d.role }}</p><p>{{ d.bio }}</p></div>
+    </article>{% endfor %}</div>
+</div></section>
+{% endblock %}

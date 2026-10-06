@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Contact | Afritensor Consult{% endblock %}
+{% macro field(id, label, type='text', req=True) %}
+<div class="field{% if errors.get(id) %} has-error{% endif %}"><label for="{{ id }}">{{ label }}{% if not req %} (optional){% endif %}</label>
+<input id="{{ id }}" name="{{ id }}" type="{{ type }}" value="{{ values.get(id,'') }}" {% if req %}required{% endif %}
+  {% if errors.get(id) %}aria-invalid="true" aria-describedby="{{ id }}-e"{% endif %}>
+{% if errors.get(id) %}<p class="err" id="{{ id }}-e">{{ errors[id] }}</p>{% endif %}</div>
+{% endmacro %}
+{% block content %}
+<section class="page-head"><div class="wrap"><h1>Contact Afritensor Consult</h1>
+<p class="lead">Send us your enquiry and we will direct it to the appropriate division.</p></div></section>
+<section class="section"><div class="wrap contact-grid">
+  <div>
+    {% if sent %}<div class="notice" role="status"><strong>Enquiry received.</strong> Thank you. We will respond to the email address you provided.</div>{% endif %}
+    <form method="post" novalidate>
+      <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+      <div class="hp" aria-hidden="true"><label>Website <input name="website" tabindex="-1" autocomplete="off"></label></div>
+      {{ field('name','Full name') }}{{ field('email','Email address','email') }}
+      {{ field('phone','Phone number','tel',False) }}{{ field('organization','Organisation',req=False) }}
+      <div class="field{% if errors.service %} has-error{% endif %}"><label for="service">Service required</label>
+        <select id="service" name="service" required><option value="">Select a service</option>
+        {% for s in services %}<option {% if values.service==s.title %}selected{% endif %}>{{ s.title }}</option>{% endfor %}
+        <option {% if values.service=='Other' %}selected{% endif %}>Other</option></select>
+        {% if errors.service %}<p class="err">{{ errors.service }}</p>{% endif %}</div>
+      <div class="field{% if errors.message %} has-error{% endif %}"><label for="message">Message</label>
+        <textarea id="message" name="message" rows="6" required>{{ values.get('message','') }}</textarea>
+        {% if errors.message %}<p class="err">{{ errors.message }}</p>{% endif %}</div>
+      <button class="btn" type="submit">Send enquiry</button>
+    </form>
+  </div>
+  <aside class="details"><h2>Our details</h2>
+    <dl><dt>Office address</dt><dd>{{ company.address }}</dd><dt>Telephone</dt><dd>{{ company.phone }}</dd>
+    <dt>Email</dt><dd>{{ company.email }}</dd><dt>Business hours</dt><dd>{{ company.hours }}</dd></dl></aside>
+</div></section>
+{% endblock %}

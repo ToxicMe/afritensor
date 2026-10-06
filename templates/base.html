@@ -1,0 +1,37 @@
+{% macro logo() -%}
+{% if company.logo_image %}<img src="{{ url_for('static', filename=company.logo_image) }}" alt="{{ company.name }}" height="36">
+{% else %}<span class="logo"><span class="logo-a">Afritensor</span> <span class="logo-c">Consult</span></span>{% endif %}
+{%- endmacro %}
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}{{ company.name }}{% endblock %}</title>
+<meta name="description" content="{{ company.description }}">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header class="site-header"><div class="wrap bar">
+  <a class="brand" href="{{ url_for('home') }}" aria-label="{{ company.name }} home">{{ logo() }}</a>
+  <nav aria-label="Main"><ul>
+    {% for ep, label in [('home','Home'),('about','About'),('services_page','Services'),('contact','Contact')] %}
+    <li><a href="{{ url_for(ep) }}" {% if request.endpoint == ep %}aria-current="page"{% endif %}>{{ label }}</a></li>{% endfor %}
+  </ul></nav>
+</div></header>
+<main>{% block content %}{% endblock %}</main>
+<footer class="site-footer"><div class="wrap">
+  <div class="foot-grid">
+    <div><div class="foot-logo">{{ logo() }}</div><p>{{ company.description }}</p></div>
+    <div><h3>Company</h3><ul>
+      <li><a href="{{ url_for('home') }}">Home</a></li><li><a href="{{ url_for('about') }}">About</a></li>
+      <li><a href="{{ url_for('services_page') }}">Services</a></li><li><a href="{{ url_for('contact') }}">Contact</a></li></ul></div>
+    <div><h3>Services</h3><ul>{% for s in services %}<li><a href="{{ url_for('services_page') }}#{{ s.slug }}">{{ s.title }}</a></li>{% endfor %}</ul></div>
+    <div><h3>Contact</h3><ul><li>{{ company.address }}</li><li>{{ company.phone }}</li><li>{{ company.email }}</li><li>{{ company.hours }}</li></ul>
+      <ul class="social">{% for s in company.social %}<li>{% if s.url %}<a href="{{ s.url }}" rel="noopener">{{ s.label }}</a>{% else %}<span>{{ s.label }} [link to be added]</span>{% endif %}</li>{% endfor %}</ul></div>
+  </div>
+  <div class="legal"><span>&copy; 2026 Afritensor Consult. All rights reserved.</span>
+    <span><a href="{{ url_for('privacy') }}">Privacy Policy</a><a href="{{ url_for('terms') }}">Terms &amp; Conditions</a></span></div>
+</div></footer>
+</body></html>
